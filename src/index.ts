@@ -7,10 +7,15 @@ interface OptionsType {
   separator?: string;
 }
 
-export function ndParse(text: string, options?: OptionsType) {
+interface OutputType {
+  meta: Record<string, string>;
+  data: Record<string, DataType>;
+}
+
+export function ndParse(text: string, options?: OptionsType): OutputType {
   const { separator = ',' } = options || {};
-  let meta: Record<string, string> = {};
-  let data: Record<string, DataType> = {};
+  let meta: OutputType['meta'] = {};
+  let data: OutputType['data'] = {};
 
   let tempHeader: string[] | undefined;
   let header: string[] | undefined;
