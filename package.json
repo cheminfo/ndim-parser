@@ -3,24 +3,27 @@
   "version": "0.0.0",
   "description": "File parser for n dimesional values",
   "main": "./lib/index.js",
+  "module": "./lib-esm/index.js",
   "types": "./lib/index.d.ts",
   "keywords": [],
   "author": "Miguel Angel Asencio Hurtado",
   "license": "MIT",
   "files": [
     "src",
-    "lib"
+    "lib",
+    "lib-esm"
   ],
   "scripts": {
-    "clean": "rimraf lib",
+    "clean": "rimraf lib lib-esm",
     "eslint": "eslint src --ext ts --cache",
     "eslint-fix": "npm run eslint -- --fix",
     "prepublishOnly": "npm run tsc",
     "test": "npm run test-coverage && npm run eslint",
     "test-coverage": "npm run test-only -- --coverage",
     "test-only": "jest",
-    "tsc": "npm run clean && npm run tsc-cjs",
-    "tsc-cjs": "tsc --project tsconfig.cjs.json"
+    "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
+    "tsc-cjs": "tsc --project tsconfig.cjs.json",
+    "tsc-esm": "tsc --project tsconfig.esm.json"
   },
   "repository": {
     "type": "git",
