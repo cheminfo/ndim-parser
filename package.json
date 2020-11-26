@@ -1,7 +1,7 @@
 {
   "name": "nd-parser",
   "version": "0.0.0",
-  "description": "File parser for n dimesional values",
+  "description": "File parser for n-dimesional values",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
   "types": "./lib/index.d.ts",

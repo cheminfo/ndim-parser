@@ -5,7 +5,7 @@
 [![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
-File parser for n dimesional values.
+File parser for n-dimesional values.
 
 ## Installation
 
@@ -14,10 +14,28 @@ File parser for n dimesional values.
 ## Usage
 
 ```js
-import { myModule } from 'nd-parser';
+import { ndParse } from 'nd-parser';
 
-const result = myModule(args);
-// result is ...
+const simpleExample = `
+meta.first,1
+meta.second,,2
+temp, volt, curr
+1,1,1
+2,2,2
+3,3,3
+`;
+
+expect(ndParse(simpleExample, { separator: ',' })).toStrictEqual({
+  data: {
+    temp: { data: [1, 2, 3], label: 'temp' },
+    volt: { data: [1, 2, 3], label: 'volt' },
+    curr: { data: [1, 2, 3], label: 'curr' },
+  },
+  meta: {
+    'meta.first': '1',
+    'meta.second': '2',
+  },
+});
 ```
 
 ## License
