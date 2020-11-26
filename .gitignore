@@ -76,5 +76,6 @@ typings/
 .fusebox/
 
 lib
+lib-esm
 
 .DS_Store
