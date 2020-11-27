@@ -12,14 +12,38 @@ interface OutputType {
   data: Record<string, DataType>;
 }
 
-function defaultKeyMapper(key: string, currKeys: string[]): string {
-  const first = key[0];
-  return currKeys.includes(first) ? JSON.stringify(currKeys.length) : first;
+function intToChar(int: number): string {
+  return String.fromCharCode(65 + int);
+}
+
+function nextChar(keys: string[]): string {
+  for (let int = 0; int < 52; int++) {
+    const char = intToChar(int);
+    if (!keys.includes(char)) return char;
+  }
+  throw new Error('To many variables for key mapper');
+}
+
+function defaultKeyMapper(keys: string[]): string[] {
+  let currKeys: string[] = new Array(keys.length);
+  for (let index = 0; index < keys.length; index++) {
+    const key = keys[index];
+    if (index === 0) {
+      currKeys[index] = 'x';
+    } else if (index === 1) {
+      currKeys[index] = 'y';
+    } else {
+      currKeys[index] = !currKeys.includes(key[0])
+        ? key[0]
+        : nextChar(currKeys);
+    }
+  }
+  return currKeys;
 }
 
 export function ndParse(
   text: string,
-  keyMap?: (key: string, curr?: string[]) => string,
+  keyMap?: (keys: string[]) => string[],
   options?: OptionsType,
 ): OutputType {
   const keyMapper = keyMap || defaultKeyMapper;
@@ -38,11 +62,11 @@ export function ndParse(
       // Classifies if it's a header
       if (isNumeric) {
         // Fix the header
-        header = tempHeader;
+        header = keyMapper(tempHeader || []);
         for (let index = 0; index < fields.length; index++) {
-          const label = tempHeader ? tempHeader[index] : String(index);
+          const label = tempHeader ? tempHeader[index] : intToChar(index);
           const value = Number(fields[index]);
-          const key = keyMapper(label, Object.keys(data));
+          const key = header[index];
           if (!isNaN(value)) data[key] = { data: [value], label };
         }
       } else {
@@ -58,7 +82,7 @@ export function ndParse(
     // Deals with numerical values
     else if (isNumeric) {
       for (let index = 0; index < fields.length; index++) {
-        const key = keyMapper(header ? header[index] : String(index), []);
+        const key = header ? header[index] : intToChar(index);
         const value = Number(fields[index]);
         if (!isNaN(value)) data[key].data.push(value);
       }
