@@ -15,8 +15,8 @@ temp, volt, curr
 test('simpleExample', () => {
   expect(ndParse(simpleExample)).toStrictEqual({
     data: {
-      t: { data: [1, 2, 3], label: 'temp' },
-      v: { data: [1, 2, 3], label: 'volt' },
+      x: { data: [1, 2, 3], label: 'temp' },
+      y: { data: [1, 2, 3], label: 'volt' },
       c: { data: [1, 2, 3], label: 'curr' },
     },
     meta: {
@@ -32,7 +32,7 @@ test('real file', () => {
     'latin1',
   );
   const parsed = ndParse(csv);
-  const keys = ['4', '5', '8', 'V', 'C', 'G', 'Q', 'I', 'F'];
+  const keys = ['x', 'y', 'G', 'Q', 'C', 'A', 'I', 'F', 'B'];
   expect(parsed.meta['Channel.Mode']).toBe('V');
   expect(Object.keys(parsed.data)).toStrictEqual(keys);
 });
