@@ -12,7 +12,17 @@ interface OutputType {
   data: Record<string, DataType>;
 }
 
-export function ndParse(text: string, options?: OptionsType): OutputType {
+function defaultKeyMapper(key: string, currKeys: string[]): string {
+  const first = key[0];
+  return currKeys.includes(first) ? JSON.stringify(currKeys.length) : first;
+}
+
+export function ndParse(
+  text: string,
+  keyMap?: (key: string, curr?: string[]) => string,
+  options?: OptionsType,
+): OutputType {
+  const keyMapper = keyMap || defaultKeyMapper;
   const { separator = ',' } = options || {};
   let meta: OutputType['meta'] = {};
   let data: OutputType['data'] = {};
@@ -30,9 +40,10 @@ export function ndParse(text: string, options?: OptionsType): OutputType {
         // Fix the header
         header = tempHeader;
         for (let index = 0; index < fields.length; index++) {
-          const key = tempHeader ? tempHeader[index] : String(index);
+          const label = tempHeader ? tempHeader[index] : String(index);
           const value = Number(fields[index]);
-          if (!isNaN(value)) data[key] = { data: [value], label: key };
+          const key = keyMapper(label, Object.keys(data));
+          if (!isNaN(value)) data[key] = { data: [value], label };
         }
       } else {
         // Add metavalues
@@ -47,7 +58,7 @@ export function ndParse(text: string, options?: OptionsType): OutputType {
     // Deals with numerical values
     else if (isNumeric) {
       for (let index = 0; index < fields.length; index++) {
-        const key = header ? header[index] : String(index);
+        const key = keyMapper(header ? header[index] : String(index), []);
         const value = Number(fields[index]);
         if (!isNaN(value)) data[key].data.push(value);
       }
