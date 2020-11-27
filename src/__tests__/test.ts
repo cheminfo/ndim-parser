@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
 import { ndParse } from '..';
 
 const simpleExample = `
@@ -21,4 +24,24 @@ test('simpleExample', () => {
       'meta.second': '2',
     },
   });
+});
+
+test('real file', () => {
+  let csv = readFileSync(
+    join(__dirname, '../../testFiles/Cdg-V.csv'),
+    'latin1',
+  );
+  const parsed = ndParse(csv);
+  expect(parsed.meta['Channel.Mode']).toBe('V');
+  expect(Object.keys(parsed.data)).toStrictEqual([
+    'Vd',
+    'C_dens',
+    'G_dens',
+    'Q_dens',
+    'C',
+    'G',
+    'Id',
+    'Freq',
+    'I_dens',
+  ]);
 });
