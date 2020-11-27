@@ -27,9 +27,9 @@ temp, volt, curr
 
 expect(ndParse(simpleExample, { separator: ',' })).toStrictEqual({
   data: {
-    temp: { data: [1, 2, 3], label: 'temp' },
-    volt: { data: [1, 2, 3], label: 'volt' },
-    curr: { data: [1, 2, 3], label: 'curr' },
+    t: { data: [1, 2, 3], label: 'temp' },
+    v: { data: [1, 2, 3], label: 'volt' },
+    c: { data: [1, 2, 3], label: 'curr' },
   },
   meta: {
     'meta.first': '1',
