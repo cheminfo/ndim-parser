@@ -20,8 +20,8 @@ export function ndParse(text: string, options?: OptionsType): OutputType {
   let tempHeader: string[] | undefined;
   let header: string[] | undefined;
   for (const line of text.split(/\r\n|\r|\n/)) {
-    const lineItems = line.split(separator);
-    const isNumeric = line && !isNaN(Number(lineItems[0]));
+    const fields = line.split(separator);
+    const isNumeric = line && !isNaN(Number(fields[0]));
 
     // Checks if the header is setted
     if (!header) {
@@ -29,9 +29,9 @@ export function ndParse(text: string, options?: OptionsType): OutputType {
       if (isNumeric) {
         // Fix the header
         header = tempHeader;
-        for (let index = 0; index < lineItems.length; index++) {
+        for (let index = 0; index < fields.length; index++) {
           const key = tempHeader ? tempHeader[index] : String(index);
-          const value = Number(lineItems[index]);
+          const value = Number(fields[index]);
           if (!isNaN(value)) data[key] = { data: [value], label: key };
         }
       } else {
@@ -40,15 +40,15 @@ export function ndParse(text: string, options?: OptionsType): OutputType {
           const [key, ...values] = tempHeader.filter((t) => t);
           if (key) meta[key] = values.join(separator);
         }
-        tempHeader = lineItems.map((t) => t.trim());
+        tempHeader = fields.map((t) => t.trim());
       }
     }
 
     // Deals with numerical values
     else if (isNumeric) {
-      for (let index = 0; index < lineItems.length; index++) {
+      for (let index = 0; index < fields.length; index++) {
         const key = header ? header[index] : String(index);
-        const value = Number(lineItems[index]);
+        const value = Number(fields[index]);
         if (!isNaN(value)) data[key].data.push(value);
       }
     }
