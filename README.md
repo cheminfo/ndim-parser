@@ -1,4 +1,4 @@
-# nd-parser
+# ndim-parser
 
 [![NPM version][npm-image]][npm-url]
 [![build status][ci-image]][ci-url]
@@ -9,12 +9,12 @@ File parser for n-dimesional values.
 
 ## Installation
 
-`$ npm i nd-parser`
+`$ npm i ndim-parser`
 
 ## Usage
 
 ```js
-import { ndParse } from 'nd-parser';
+import { ndParse } from 'ndim-parser';
 
 const simpleExample = `
 meta.first,1
@@ -42,11 +42,11 @@ expect(ndParse(simpleExample, { separator: ',' })).toStrictEqual({
 
 [MIT](./LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/nd-parser.svg
-[npm-url]: https://www.npmjs.com/package/nd-parser
-[ci-image]: https://github.com/mylims/nd-parser/workflows/Node.js%20CI/badge.svg?branch=master
-[ci-url]: https://github.com/mylims/nd-parser/actions?query=workflow%3A%22Node.js+CI%22
-[codecov-image]: https://img.shields.io/codecov/c/github/mylims/nd-parser.svg
-[codecov-url]: https://codecov.io/gh/mylims/nd-parser
-[download-image]: https://img.shields.io/npm/dm/nd-parser.svg
-[download-url]: https://www.npmjs.com/package/nd-parser
+[npm-image]: https://img.shields.io/npm/v/ndim-parser.svg
+[npm-url]: https://www.npmjs.com/package/ndim-parser
+[ci-image]: https://github.com/mylims/ndim-parser/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-url]: https://github.com/mylims/ndim-parser/actions?query=workflow%3A%22Node.js+CI%22
+[codecov-image]: https://img.shields.io/codecov/c/github/mylims/ndim-parser.svg
+[codecov-url]: https://codecov.io/gh/mylims/ndim-parser
+[download-image]: https://img.shields.io/npm/dm/ndim-parser.svg
+[download-url]: https://www.npmjs.com/package/ndim-parser

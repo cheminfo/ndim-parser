@@ -1,5 +1,5 @@
 {
-  "name": "nd-parser",
+  "name": "ndim-parser",
   "version": "0.1.0",
   "description": "File parser for n-dimesional values",
   "main": "./lib/index.js",
@@ -27,12 +27,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mylims/nd-parser.git"
+    "url": "git+https://github.com/mylims/ndim-parser.git"
   },
   "bugs": {
-    "url": "https://github.com/mylims/nd-parser/issues"
+    "url": "https://github.com/mylims/ndim-parser/issues"
   },
-  "homepage": "https://github.com/mylims/nd-parser#readme",
+  "homepage": "https://github.com/mylims/ndim-parser#readme",
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
