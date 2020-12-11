@@ -6,10 +6,10 @@ import { ndParse } from '..';
 const simpleExample = `
 meta.first,1
 meta.second,,2
-temp, volt, curr
-1,1,1
-2,2,2
-3,3,3
+temp, volt, curr, temp_sup
+1,1,1,1
+2,2,2,2
+3,3,3,3
 `;
 
 test('simpleExample', () => {
@@ -18,6 +18,7 @@ test('simpleExample', () => {
       x: { data: [1, 2, 3], label: 'temp' },
       y: { data: [1, 2, 3], label: 'volt' },
       c: { data: [1, 2, 3], label: 'curr' },
+      t: { data: [1, 2, 3], label: 'temp sup' },
     },
     meta: {
       'meta.first': '1',

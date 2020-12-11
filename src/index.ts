@@ -5,6 +5,8 @@ interface DataType {
 
 interface OptionsType {
   separator?: string;
+  keyMap?: (keys: string[]) => string[];
+  labelMap?: (keys: string[]) => string[];
 }
 
 interface OutputType {
@@ -41,18 +43,22 @@ function defaultKeyMapper(keys: string[]): string[] {
   return currKeys;
 }
 
-export function ndParse(
-  text: string,
-  keyMap?: (keys: string[]) => string[],
-  options?: OptionsType,
-): OutputType {
-  const keyMapper = keyMap || defaultKeyMapper;
-  const { separator = ',' } = options || {};
+function defaultLabelMap(keys: string[]): string[] {
+  return keys.map((label) => label.replace(/_/g, ' '));
+}
+
+export function ndParse(text: string, options?: OptionsType): OutputType {
+  const {
+    separator = ',',
+    keyMap = defaultKeyMapper,
+    labelMap = defaultLabelMap,
+  } = options || {};
   let meta: OutputType['meta'] = {};
   let data: OutputType['data'] = {};
 
-  let tempHeader: string[] | undefined;
+  let tempHeader: string[] = [];
   let header: string[] | undefined;
+  let labels: string[] = [];
   for (const line of text.split(/\r\n|\r|\n/)) {
     const fields = line.split(separator);
     const isNumeric = line && !isNaN(Number(fields[0]));
@@ -62,9 +68,10 @@ export function ndParse(
       // Classifies if it's a header
       if (isNumeric) {
         // Fix the header
-        header = keyMapper(tempHeader || []);
+        header = keyMap(tempHeader);
+        labels = labelMap(tempHeader);
         for (let index = 0; index < fields.length; index++) {
-          const label = tempHeader ? tempHeader[index] : intToChar(index);
+          const label = labels[index] || intToChar(index);
           const value = Number(fields[index]);
           const key = header[index];
           if (!isNaN(value)) data[key] = { data: [value], label };
@@ -84,10 +91,11 @@ export function ndParse(
       for (let index = 0; index < fields.length; index++) {
         const key = header ? header[index] : intToChar(index);
         const value = Number(fields[index]);
-        if (!isNaN(value)) data[key].data.push(value);
+        if (!isNaN(value)) data[key]?.data.push(value);
       }
     }
   }
 
-  return { meta, data };
+  const { x, y, ...unorderData } = data;
+  return { meta, data: { x, y, ...unorderData } };
 }
