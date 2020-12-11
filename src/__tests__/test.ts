@@ -27,6 +27,31 @@ test('simpleExample', () => {
   });
 });
 
+test('with options', () => {
+  expect(
+    ndParse(simpleExample, {
+      keyMap: () => ['y', 'x', 'c', 'v'],
+      labelMap: () => [
+        'temperature',
+        'ground volts',
+        'ground current',
+        'superficial temperature',
+      ],
+    }),
+  ).toStrictEqual({
+    data: {
+      x: { data: [1, 2, 3], label: 'ground volts' },
+      y: { data: [1, 2, 3], label: 'temperature' },
+      c: { data: [1, 2, 3], label: 'ground current' },
+      v: { data: [1, 2, 3], label: 'superficial temperature' },
+    },
+    meta: {
+      'meta.first': '1',
+      'meta.second': '2',
+    },
+  });
+});
+
 test('real file', () => {
   let csv = readFileSync(
     join(__dirname, '../../testFiles/Cdg-V.csv'),
