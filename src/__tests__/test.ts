@@ -62,3 +62,13 @@ test('real file', () => {
   expect(parsed.meta['Channel.Mode']).toBe('V');
   expect(Object.keys(parsed.data)).toStrictEqual(keys);
 });
+
+test('breakdown', () => {
+  let csv = readFileSync(
+    join(__dirname, '../../testFiles/breakdown.csv'),
+    'latin1',
+  );
+  const parsed = ndParse(csv, { isTagged: true });
+  const keys = ['x', 'y', 'I', 'A', 'B', 'C'];
+  expect(Object.keys(parsed.data)).toStrictEqual(keys);
+});

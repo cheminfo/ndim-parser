@@ -5,6 +5,7 @@ interface DataType {
 
 interface OptionsType {
   separator?: string;
+  isTagged?: boolean;
   keyMap?: (keys: string[]) => string[];
   labelMap?: (keys: string[]) => string[];
 }
@@ -50,6 +51,7 @@ function defaultLabelMap(keys: string[]): string[] {
 export function ndParse(text: string, options?: OptionsType): OutputType {
   const {
     separator = ',',
+    isTagged = false,
     keyMap = defaultKeyMapper,
     labelMap = defaultLabelMap,
   } = options || {};
@@ -59,9 +61,18 @@ export function ndParse(text: string, options?: OptionsType): OutputType {
   let tempHeader: string[] = [];
   let header: string[] | undefined;
   let labels: string[] = [];
+  let prevTag: string | undefined;
+  let tag: string | undefined;
+
   for (const line of text.split(/\r\n|\r|\n/)) {
-    const fields = line.split(separator);
-    const isNumeric = line && !isNaN(Number(fields[0]));
+    let fields = line.split(separator);
+    if (isTagged) {
+      prevTag = tag;
+      tag = fields.shift();
+    }
+
+    const isNumeric =
+      line && (isTagged ? tag === 'DataValue' : !isNaN(Number(fields[0])));
 
     // Checks if the header is setted
     if (!header) {
@@ -80,7 +91,19 @@ export function ndParse(text: string, options?: OptionsType): OutputType {
         // Add metavalues
         if (tempHeader) {
           const [key, ...values] = tempHeader.filter((t) => t);
-          if (key) meta[key] = values.join(separator);
+          if (
+            prevTag &&
+            [
+              'SetupTitle',
+              'PrimitiveTest',
+              'Dimension1',
+              'Dimension2',
+            ].includes(prevTag)
+          ) {
+            meta[prevTag] = [key, ...values].join(separator);
+          } else if (key) {
+            meta[key] = values.join(separator);
+          }
         }
         tempHeader = fields.map((t) => t.trim());
       }
