@@ -53,7 +53,7 @@ export function appendedParser(
     if (i === startNumeric.length - 1) {
       headers.push(startNumeric[i]);
     }
-    // The spae in the block is good enough
+    // The space in the block is good enough
     else if (endNumeric[i] - startNumeric[i] > minNumericRows) {
       headers.push(startNumeric[i]);
       start.push(endNumeric[i]);
