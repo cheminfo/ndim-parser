@@ -5,8 +5,7 @@ export interface DataType {
 
 export interface AppendedOptionsType {
   separator?: string;
-  startTags?: string[];
-  minVariables?: number;
+  minNumericRows?: number;
 }
 
 export interface OutputType {
