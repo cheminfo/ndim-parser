@@ -37,3 +37,14 @@ test('capacitance', () => {
   expect(parsed[0].data).toHaveProperty('x');
   expect(parsed[0].data).toHaveProperty('y');
 });
+
+test('IV', () => {
+  let csv = readFileSync(
+    join(__dirname, '../../testFiles/sweep.csv'),
+    'latin1',
+  );
+  const parsed = appendedParser(csv);
+  expect(parsed).toHaveLength(1);
+  expect(parsed[0].data).toHaveProperty('x');
+  expect(parsed[0].data).toHaveProperty('y');
+});

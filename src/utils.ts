@@ -34,10 +34,9 @@ export function defaultLabelMap(keys: string[]): string[] {
 export function isNumericRow(line: string[]): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_first, ...list] = line;
-  return list.reduce(
-    (acc: boolean, curr) => acc && (isNumber(curr) || !curr),
-    true,
-  );
+  const filtered = list.filter((val) => !!val);
+  if (filtered.length === 0) return false;
+  return filtered.reduce((acc: boolean, curr) => acc && isNumber(curr), true);
 }
 
 export function isNumber(str: string): boolean {

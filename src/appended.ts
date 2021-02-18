@@ -5,37 +5,58 @@ export function appendedParser(
   text: string,
   options: AppendedOptionsType = {},
 ): OutputType[] {
-  const {
-    separator = ',',
-    startTags = ['SetupTitle', 'Setup title'],
-    minVariables = 4,
-  } = options;
+  const { separator = ',', minNumericRows = 5 } = options;
 
   const lines = text
     .split(/\r\n|\r|\n/)
     .filter((val) => !!val)
-    .map((val) => val.trim().split(separator));
+    .map((val) =>
+      val
+        .trim()
+        .split(separator)
+        .map((v) => v.trim()),
+    );
 
-  let headers: number[] = [];
-  let start: number[] = [];
-  //for (let index = 0; index < 140; index++) {
-  for (let index = 0; index < lines.length - 1; index++) {
+  // Get numeric rows boundaries
+  let startNumeric = [];
+  let endNumeric = [];
+  for (let index = 0; index < lines.length; index++) {
     const currentLine = lines[index];
-    const nextLine = lines[index + 1];
 
-    // Identifies header of data
+    // Start numeric block
     if (
-      nextLine.length === currentLine.length &&
-      currentLine.length > minVariables &&
+      index < lines.length - 1 &&
       !isNumericRow(currentLine) &&
-      isNumericRow(nextLine)
+      isNumericRow(lines[index + 1])
     ) {
-      headers.push(index);
+      startNumeric.push(index);
     }
 
-    // Identifies start of data
-    if (startTags.includes(currentLine[0])) {
-      start.push(index);
+    // End numeric block
+    if (
+      index > 0 &&
+      !isNumericRow(currentLine) &&
+      isNumericRow(lines[index - 1])
+    ) {
+      endNumeric.push(index);
+    }
+  }
+  if (startNumeric.length !== endNumeric.length + 1) {
+    throw new Error('Mismatch between numeric blocks in file');
+  }
+
+  // Filter headers and start based on the minimum length
+  let headers: number[] = [];
+  let start: number[] = [0];
+  for (let i = 0; i < startNumeric.length; i++) {
+    // Last item in endNumec array
+    if (i === startNumeric.length - 1) {
+      headers.push(startNumeric[i]);
+    }
+    // The space in the block is good enough
+    else if (endNumeric[i] - startNumeric[i] > minNumericRows) {
+      headers.push(startNumeric[i]);
+      start.push(endNumeric[i]);
     }
   }
 
