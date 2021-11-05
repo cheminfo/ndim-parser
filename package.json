@@ -1,7 +1,7 @@
 {
   "name": "ndim-parser",
   "version": "0.4.0",
-  "description": "File parser for n-dimesional values",
+  "description": "File parser for n-dimensional values",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
   "types": "./lib/index.d.ts",
@@ -50,8 +50,13 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.1.0",
     "eslint-config-cheminfo-typescript": "^10.2.2",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.2.1",
+    "eslint-plugin-jsdoc": "^37.0.0",
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",

@@ -5,7 +5,7 @@
 [![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
-File parser for n-dimesional values.
+File parser for n-dimensional values.
 
 ## Installation
 
