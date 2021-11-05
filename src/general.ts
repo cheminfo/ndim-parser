@@ -1,21 +1,23 @@
-import type { GeneralOptionsType, OutputType } from './types';
+import type { MeasurementXY, OneLowerCase } from 'cheminfo-types';
+
+import type { GeneralOptionsType } from './types';
 import { defaultKeyMapper, defaultLabelMap, intToChar } from './utils';
 
 export function ndParse(
   text: string,
   options?: GeneralOptionsType,
-): OutputType {
+): MeasurementXY<number[]> {
   const {
     separator = ',',
     isTagged = false,
     keyMap = defaultKeyMapper,
     labelMap = defaultLabelMap,
   } = options || {};
-  let meta: OutputType['meta'] = {};
-  let data: OutputType['data'] = {};
+  let meta: MeasurementXY['meta'] = {};
+  let variables: Partial<MeasurementXY<number[]>['variables']> = {};
 
   let tempHeader: string[] = [];
-  let header: string[] | undefined;
+  let header: OneLowerCase[] | undefined;
   let labels: string[] = [];
   let prevTag: string | undefined;
   let tag: string | undefined;
@@ -30,7 +32,7 @@ export function ndParse(
     const isNumeric =
       line && (isTagged ? tag === 'DataValue' : !isNaN(Number(fields[0])));
 
-    // Checks if the header is setted
+    // Checks if the header is set
     if (!header) {
       // Classifies if it's a header
       if (isNumeric) {
@@ -41,10 +43,10 @@ export function ndParse(
           const label = labels[index] || intToChar(index);
           const value = Number(fields[index]);
           const key = header[index];
-          if (!isNaN(value)) data[key] = { data: [value], label };
+          if (!isNaN(value)) variables[key] = { data: [value], label };
         }
       } else {
-        // Add metavalues
+        // Add meta-values
         if (tempHeader) {
           const [key, ...values] = tempHeader.filter((t) => t);
           if (
@@ -70,11 +72,13 @@ export function ndParse(
       for (let index = 0; index < fields.length; index++) {
         const key = header ? header[index] : intToChar(index);
         const value = Number(fields[index]);
-        if (!isNaN(value)) data[key]?.data.push(value);
+        if (!isNaN(value)) variables[key]?.data.push(value);
       }
     }
   }
 
-  const { x, y, ...unorderData } = data;
-  return { meta, data: { x, y, ...unorderData } };
+  const { x, y, ...unorderedData } = variables;
+  if (!x || !y) throw new Error('x and y variables are necessary');
+
+  return { meta, variables: { x, y, ...unorderedData } };
 }

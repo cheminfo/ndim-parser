@@ -1,21 +1,13 @@
-export interface DataType {
-  data: number[];
-  label: string;
-}
+import type { OneLowerCase } from 'cheminfo-types';
 
 export interface AppendedOptionsType {
   separator?: string;
   minNumericRows?: number;
 }
 
-export interface OutputType {
-  meta: Record<string, string>;
-  data: Record<string, DataType>;
-}
-
 export interface GeneralOptionsType {
   separator?: string;
   isTagged?: boolean;
-  keyMap?: (keys: string[]) => string[];
+  keyMap?: (keys: string[]) => OneLowerCase[];
   labelMap?: (keys: string[]) => string[];
 }

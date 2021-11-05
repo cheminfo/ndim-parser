@@ -14,7 +14,7 @@ temp, volt, curr, temp_sup
 
 test('simpleExample', () => {
   expect(ndParse(simpleExample)).toStrictEqual({
-    data: {
+    variables: {
       x: { data: [1, 2, 3], label: 'temp' },
       y: { data: [1, 2, 3], label: 'volt' },
       c: { data: [1, 2, 3], label: 'curr' },
@@ -39,7 +39,7 @@ test('with options', () => {
       ],
     }),
   ).toStrictEqual({
-    data: {
+    variables: {
       x: { data: [1, 2, 3], label: 'ground volts' },
       y: { data: [1, 2, 3], label: 'temperature' },
       c: { data: [1, 2, 3], label: 'ground current' },
@@ -59,8 +59,8 @@ test('real file', () => {
   );
   const parsed = ndParse(csv);
   const keys = ['x', 'y', 'G', 'Q', 'C', 'A', 'I', 'F', 'B'];
-  expect(parsed.meta['Channel.Mode']).toBe('V');
-  expect(Object.keys(parsed.data)).toStrictEqual(keys);
+  expect(parsed.meta?.['Channel.Mode']).toBe('V');
+  expect(Object.keys(parsed.variables)).toStrictEqual(keys);
 });
 
 test('breakdown', () => {
@@ -70,5 +70,5 @@ test('breakdown', () => {
   );
   const parsed = ndParse(csv, { isTagged: true });
   const keys = ['x', 'y', 'I', 'A', 'B', 'C'];
-  expect(Object.keys(parsed.data)).toStrictEqual(keys);
+  expect(Object.keys(parsed.variables)).toStrictEqual(keys);
 });

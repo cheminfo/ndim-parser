@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib lib-esm",
+    "check-types": "tsc --noEmit",
     "eslint": "eslint src --ext ts --cache",
     "eslint-fix": "npm run eslint -- --fix",
     "prepublishOnly": "npm run tsc",
@@ -44,14 +45,17 @@
     "tabWidth": 2,
     "trailingComma": "all"
   },
+  "dependencies": {
+    "cheminfo-types": "^0.6.0"
+  },
   "devDependencies": {
-    "@types/jest": "~26.0.15",
-    "eslint": "~7.14.0",
-    "eslint-config-cheminfo-typescript": "~8.0.5",
-    "jest": "~26.6.3",
-    "prettier": "~2.2.0",
-    "rimraf": "~3.0.2",
-    "ts-jest": "~26.4.4",
-    "typescript": "~4.1.2"
+    "@types/jest": "^27.0.2",
+    "eslint": "^8.1.0",
+    "eslint-config-cheminfo-typescript": "^10.2.2",
+    "jest": "^27.3.1",
+    "prettier": "^2.4.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4"
   }
 }

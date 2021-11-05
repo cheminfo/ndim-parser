@@ -1,10 +1,17 @@
-import type { DataType, AppendedOptionsType, OutputType } from './types';
+import type {
+  MeasurementXY,
+  MeasurementXYVariables,
+  OneLowerCase,
+  MeasurementVariable,
+} from 'cheminfo-types';
+
+import type { AppendedOptionsType } from './types';
 import { isNumber, isNumericRow, orderedKeyMap } from './utils';
 
 export function appendedParser(
   text: string,
   options: AppendedOptionsType = {},
-): OutputType[] {
+): MeasurementXY[] {
   const { separator = ',', minNumericRows = 5 } = options;
 
   const lines = text
@@ -49,7 +56,7 @@ export function appendedParser(
   let headers: number[] = [];
   let start: number[] = [0];
   for (let i = 0; i < startNumeric.length; i++) {
-    // Last item in endNumec array
+    // Last item in array
     if (i === startNumeric.length - 1) {
       headers.push(startNumeric[i]);
     }
@@ -65,18 +72,22 @@ export function appendedParser(
     throw new Error('Unable to retrieve structure');
   }
   if (headers.length !== start.length) {
-    throw new Error('Unconsistent amount of headers an series');
+    throw new Error('Inconsistent amount of headers an series');
   }
 
   // If has tags ignore first row
   const isTagged = !isNumber(lines[headers[0] + 1][0]);
 
   // Split in metadata, header and data
-  let series = new Array(headers.length);
-  for (let serieIndex = 0; serieIndex < headers.length; serieIndex++) {
+  let series: MeasurementXY[] = new Array(headers.length);
+  for (let seriesIndex = 0; seriesIndex < headers.length; seriesIndex++) {
     // Add metadata
     let meta: Record<string, string> = {};
-    for (let index = start[serieIndex]; index < headers[serieIndex]; index++) {
+    for (
+      let index = start[seriesIndex];
+      index < headers[seriesIndex];
+      index++
+    ) {
       if (lines[index].length === 2) {
         meta[lines[index][0]] = lines[index][1];
       }
@@ -91,23 +102,35 @@ export function appendedParser(
     }
 
     // Add variables structure to add units
-    const labels = lines[headers[serieIndex]];
+    const labels = lines[headers[seriesIndex]];
     const keys = orderedKeyMap(labels, isTagged);
 
     // Add data
     const endDataIndex =
-      serieIndex + 1 === headers.length
+      seriesIndex + 1 === headers.length
         ? lines.length - 1
-        : start[serieIndex + 1];
-    let data: Record<string, DataType> = {};
+        : start[seriesIndex + 1];
+    let variables: Partial<Record<OneLowerCase, MeasurementVariable>> = {};
     for (let keyIndex = isTagged ? 1 : 0; keyIndex < keys.length; keyIndex++) {
-      data[keys[keyIndex]] = { data: [], label: labels[keyIndex] };
-      for (let index = headers[serieIndex] + 1; index < endDataIndex; index++) {
-        data[keys[keyIndex]].data.push(parseFloat(lines[index][keyIndex]));
+      let data: number[] = [];
+      for (
+        let index = headers[seriesIndex] + 1;
+        index < endDataIndex;
+        index++
+      ) {
+        data.push(parseFloat(lines[index][keyIndex]));
       }
+      variables[keys[keyIndex]] = { data, label: labels[keyIndex] };
     }
 
-    series[serieIndex] = { data, meta };
+    if (!variables.x || !variables.y) {
+      throw new Error('x and y variables are necessary');
+    }
+
+    series[seriesIndex] = {
+      variables: variables as MeasurementXYVariables,
+      meta,
+    };
   }
 
   return series;
