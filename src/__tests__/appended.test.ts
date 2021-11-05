@@ -11,8 +11,8 @@ test('multiple breakdown', () => {
   const parsed = appendedParser(csv);
   expect(parsed).toHaveLength(164);
   for (const serie of parsed) {
-    expect(serie.data).toHaveProperty('x');
-    expect(serie.data).toHaveProperty('y');
+    expect(serie.variables).toHaveProperty('x');
+    expect(serie.variables).toHaveProperty('y');
   }
 });
 
@@ -23,8 +23,8 @@ test('breakdown', () => {
   );
   const parsed = appendedParser(csv);
   expect(parsed).toHaveLength(1);
-  expect(parsed[0].data).toHaveProperty('x');
-  expect(parsed[0].data).toHaveProperty('y');
+  expect(parsed[0].variables).toHaveProperty('x');
+  expect(parsed[0].variables).toHaveProperty('y');
 });
 
 test('capacitance', () => {
@@ -34,8 +34,8 @@ test('capacitance', () => {
   );
   const parsed = appendedParser(csv);
   expect(parsed).toHaveLength(1);
-  expect(parsed[0].data).toHaveProperty('x');
-  expect(parsed[0].data).toHaveProperty('y');
+  expect(parsed[0].variables).toHaveProperty('x');
+  expect(parsed[0].variables).toHaveProperty('y');
 });
 
 test('IV', () => {
@@ -45,6 +45,6 @@ test('IV', () => {
   );
   const parsed = appendedParser(csv);
   expect(parsed).toHaveLength(1);
-  expect(parsed[0].data).toHaveProperty('x');
-  expect(parsed[0].data).toHaveProperty('y');
+  expect(parsed[0].variables).toHaveProperty('x');
+  expect(parsed[0].variables).toHaveProperty('y');
 });

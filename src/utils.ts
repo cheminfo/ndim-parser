@@ -1,8 +1,10 @@
-export function intToChar(int: number): string {
-  return String.fromCharCode(65 + int);
+import type { OneLowerCase } from 'cheminfo-types';
+
+export function intToChar(int: number) {
+  return String.fromCharCode(65 + int) as OneLowerCase;
 }
 
-export function nextChar(keys: string[]): string {
+export function nextChar(keys: string[]): OneLowerCase {
   for (let int = 0; int < 52; int++) {
     const char = intToChar(int);
     if (!keys.includes(char)) return char;
@@ -10,8 +12,8 @@ export function nextChar(keys: string[]): string {
   throw new Error('To many variables for key mapper');
 }
 
-export function defaultKeyMapper(keys: string[]): string[] {
-  let currKeys: string[] = new Array(keys.length);
+export function defaultKeyMapper(keys: string[]): OneLowerCase[] {
+  let currKeys: OneLowerCase[] = new Array(keys.length);
   for (let index = 0; index < keys.length; index++) {
     const key = keys[index];
     if (index === 0) {
@@ -19,8 +21,9 @@ export function defaultKeyMapper(keys: string[]): string[] {
     } else if (index === 1) {
       currKeys[index] = 'y';
     } else {
-      currKeys[index] = !currKeys.includes(key[0])
-        ? key[0]
+      const firstChar = key[0] as OneLowerCase;
+      currKeys[index] = !currKeys.includes(firstChar)
+        ? firstChar
         : nextChar(currKeys);
     }
   }
@@ -33,7 +36,7 @@ export function defaultLabelMap(keys: string[]): string[] {
 
 export function isNumericRow(line: string[]): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_first, ...list] = line;
+  const [first, ...list] = line;
   const filtered = list.filter((val) => !!val);
   if (filtered.length === 0) return false;
   return filtered.reduce((acc: boolean, curr) => acc && isNumber(curr), true);
@@ -43,8 +46,11 @@ export function isNumber(str: string): boolean {
   return !isNaN(parseFloat(str));
 }
 
-export function orderedKeyMap(keys: string[], ignoreFirst: boolean): string[] {
-  let currKeys: string[] = new Array(keys.length);
+export function orderedKeyMap(
+  keys: string[],
+  ignoreFirst: boolean,
+): OneLowerCase[] {
+  let currKeys: OneLowerCase[] = new Array(keys.length);
   const start = ignoreFirst ? 1 : 0;
   for (let index = 0; index < keys.length; index++) {
     if (index === start) {
