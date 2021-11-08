@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.5.1](https://www.github.com/mylims/ndim-parser/compare/v0.5.0...v0.5.1) (2021-11-08)
+
+
+### Bug Fixes
+
+* generate lowercase index instead of uppercase ([dc9f1ed](https://www.github.com/mylims/ndim-parser/commit/dc9f1ede4519df65f75fca5385133f334a41d378))
+* reduce posible number of variables ([6edcd28](https://www.github.com/mylims/ndim-parser/commit/6edcd2802c869d98d2ab583f4414596d399a0505))
+
 ## [0.5.0](https://www.github.com/mylims/ndim-parser/compare/v0.4.0...v0.5.0) (2021-11-08)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "ndim-parser",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "File parser for n-dimensional values",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
