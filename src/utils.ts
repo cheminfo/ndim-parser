@@ -1,7 +1,7 @@
 import type { OneLowerCase } from 'cheminfo-types';
 
 export function intToChar(int: number) {
-  return String.fromCharCode(65 + int) as OneLowerCase;
+  return String.fromCharCode(97 + int) as OneLowerCase;
 }
 
 export function nextChar(keys: string[]): OneLowerCase {
