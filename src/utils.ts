@@ -5,7 +5,7 @@ export function intToChar(int: number) {
 }
 
 export function nextChar(keys: string[]): OneLowerCase {
-  for (let int = 0; int < 52; int++) {
+  for (let int = 0; int < 25; int++) {
     const char = intToChar(int);
     if (!keys.includes(char)) return char;
   }
