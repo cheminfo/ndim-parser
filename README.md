@@ -44,9 +44,9 @@ expect(ndParse(simpleExample, { separator: ',' })).toStrictEqual({
 
 [npm-image]: https://img.shields.io/npm/v/ndim-parser.svg
 [npm-url]: https://www.npmjs.com/package/ndim-parser
-[ci-image]: https://github.com/mylims/ndim-parser/workflows/Node.js%20CI/badge.svg?branch=master
-[ci-url]: https://github.com/mylims/ndim-parser/actions?query=workflow%3A%22Node.js+CI%22
-[codecov-image]: https://img.shields.io/codecov/c/github/mylims/ndim-parser.svg
-[codecov-url]: https://codecov.io/gh/mylims/ndim-parser
+[ci-image]: https://github.com/cheminfo/ndim-parser/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-url]: https://github.com/cheminfo/ndim-parser/actions?query=workflow%3A%22Node.js+CI%22
+[codecov-image]: https://img.shields.io/codecov/c/github/cheminfo/ndim-parser.svg
+[codecov-url]: https://codecov.io/gh/cheminfo/ndim-parser
 [download-image]: https://img.shields.io/npm/dm/ndim-parser.svg
 [download-url]: https://www.npmjs.com/package/ndim-parser
