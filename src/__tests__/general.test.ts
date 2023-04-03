@@ -1,6 +1,8 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
+import { test, expect } from 'vitest';
+
 import { ndParse } from '..';
 
 const simpleExample = `
@@ -58,7 +60,7 @@ test('real file', () => {
     'latin1',
   );
   const parsed = ndParse(csv);
-  const keys = ['x', 'y', 'G', 'Q', 'C', 'A', 'I', 'F', 'B'];
+  const keys = ['x', 'y', 'G', 'Q', 'C', 'a', 'I', 'F', 'b'];
   expect(parsed.meta?.['Channel.Mode']).toBe('V');
   expect(Object.keys(parsed.variables)).toStrictEqual(keys);
 });
@@ -69,6 +71,6 @@ test('breakdown', () => {
     'latin1',
   );
   const parsed = ndParse(csv, { isTagged: true });
-  const keys = ['x', 'y', 'I', 'A', 'B', 'C'];
+  const keys = ['x', 'y', 'I', 'a', 'b', 'c'];
   expect(Object.keys(parsed.variables)).toStrictEqual(keys);
 });
