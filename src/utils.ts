@@ -13,7 +13,7 @@ export function nextChar(keys: string[]): OneLowerCase {
 }
 
 export function defaultKeyMapper(keys: string[]): OneLowerCase[] {
-  let currKeys: OneLowerCase[] = new Array(keys.length);
+  const currKeys: OneLowerCase[] = new Array(keys.length);
   for (let index = 0; index < keys.length; index++) {
     const key = keys[index];
     if (index === 0) {
@@ -50,7 +50,7 @@ export function orderedKeyMap(
   keys: string[],
   ignoreFirst: boolean,
 ): OneLowerCase[] {
-  let currKeys: OneLowerCase[] = new Array(keys.length);
+  const currKeys: OneLowerCase[] = new Array(keys.length);
   const start = ignoreFirst ? 1 : 0;
   for (let index = 0; index < keys.length; index++) {
     if (index === start) {

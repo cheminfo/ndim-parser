@@ -55,7 +55,7 @@ test('with options', () => {
 });
 
 test('real file', () => {
-  let csv = readFileSync(
+  const csv = readFileSync(
     join(__dirname, '../../testFiles/Cdg-V.csv'),
     'latin1',
   );
@@ -66,7 +66,7 @@ test('real file', () => {
 });
 
 test('breakdown', () => {
-  let csv = readFileSync(
+  const csv = readFileSync(
     join(__dirname, '../../testFiles/breakdown.csv'),
     'latin1',
   );

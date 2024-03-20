@@ -25,8 +25,8 @@ export function appendedParser(
     );
 
   // Get numeric rows boundaries
-  let startNumeric = [];
-  let endNumeric = [];
+  const startNumeric = [];
+  const endNumeric = [];
   for (let index = 0; index < lines.length; index++) {
     const currentLine = lines[index];
 
@@ -53,8 +53,8 @@ export function appendedParser(
   }
 
   // Filter headers and start based on the minimum length
-  let headers: number[] = [];
-  let start: number[] = [0];
+  const headers: number[] = [];
+  const start: number[] = [0];
   for (let i = 0; i < startNumeric.length; i++) {
     // Last item in array
     if (i === startNumeric.length - 1) {
@@ -79,10 +79,10 @@ export function appendedParser(
   const isTagged = !isNumber(lines[headers[0] + 1][0]);
 
   // Split in metadata, header and data
-  let series: MeasurementXY[] = new Array(headers.length);
+  const series: MeasurementXY[] = new Array(headers.length);
   for (let seriesIndex = 0; seriesIndex < headers.length; seriesIndex++) {
     // Add metadata
-    let meta: Record<string, string> = {};
+    const meta: Record<string, string> = {};
     for (
       let index = start[seriesIndex];
       index < headers[seriesIndex];
@@ -110,9 +110,9 @@ export function appendedParser(
       seriesIndex + 1 === headers.length
         ? lines.length - 1
         : start[seriesIndex + 1];
-    let variables: Partial<Record<OneLowerCase, MeasurementVariable>> = {};
+    const variables: Partial<Record<OneLowerCase, MeasurementVariable>> = {};
     for (let keyIndex = isTagged ? 1 : 0; keyIndex < keys.length; keyIndex++) {
-      let data: number[] = [];
+      const data: number[] = [];
       for (
         let index = headers[seriesIndex] + 1;
         index < endDataIndex;

@@ -6,7 +6,7 @@ import { test, expect } from 'vitest';
 import { appendedParser } from '..';
 
 test('multiple breakdown', () => {
-  let csv = readFileSync(
+  const csv = readFileSync(
     join(__dirname, '../../testFiles/multiple_breakdown.csv'),
     'latin1',
   );
@@ -19,7 +19,7 @@ test('multiple breakdown', () => {
 });
 
 test('breakdown', () => {
-  let csv = readFileSync(
+  const csv = readFileSync(
     join(__dirname, '../../testFiles/breakdown.csv'),
     'latin1',
   );
@@ -30,7 +30,7 @@ test('breakdown', () => {
 });
 
 test('capacitance', () => {
-  let csv = readFileSync(
+  const csv = readFileSync(
     join(__dirname, '../../testFiles/Cdg-V.csv'),
     'latin1',
   );
@@ -41,7 +41,7 @@ test('capacitance', () => {
 });
 
 test('IV', () => {
-  let csv = readFileSync(
+  const csv = readFileSync(
     join(__dirname, '../../testFiles/sweep.csv'),
     'latin1',
   );

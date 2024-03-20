@@ -13,8 +13,8 @@ export function ndParse(
     keyMap = defaultKeyMapper,
     labelMap = defaultLabelMap,
   } = options || {};
-  let meta: MeasurementXY['meta'] = {};
-  let variables: Partial<MeasurementXY<number[]>['variables']> = {};
+  const meta: MeasurementXY['meta'] = {};
+  const variables: Partial<MeasurementXY<number[]>['variables']> = {};
 
   let tempHeader: string[] = [];
   let header: OneLowerCase[] | undefined;
@@ -23,7 +23,7 @@ export function ndParse(
   let tag: string | undefined;
 
   for (const line of text.split(/\r\n|\r|\n/)) {
-    let fields = line.split(separator);
+    const fields = line.split(separator);
     if (isTagged) {
       prevTag = tag;
       tag = fields.shift();
