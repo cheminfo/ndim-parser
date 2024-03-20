@@ -21,7 +21,7 @@
     "prepack": "npm run tsc",
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
-    "test": "npm run test-only && npm run eslint && npm run prettier",
+    "test": "npm run test-only && npm run eslint && npm run prettier && nmr run check-types",
     "test-only": "vitest run --coverage",
     "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
     "tsc-cjs": "tsc --project tsconfig.cjs.json",
@@ -35,15 +35,9 @@
     "url": "https://github.com/cheminfo/ndim-parser/issues"
   },
   "homepage": "https://github.com/cheminfo/ndim-parser#readme",
-  "prettier": {
-    "arrowParens": "always",
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "all"
-  },
   "dependencies": {
-    "cheminfo-types": "^1.7.3"
+    "cheminfo-types": "^1.7.3",
+    "ensure-string": "^1.2.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

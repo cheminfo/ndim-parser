@@ -3,6 +3,7 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "inlineSourceMap": true,
+    "skipLibCheck": true,
     "strict": true,
     "target": "es2019"
   },
