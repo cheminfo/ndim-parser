@@ -4,7 +4,7 @@ import { ensureString } from 'ensure-string';
 import type { GeneralOptionsType } from './types';
 import { defaultKeyMapper, defaultLabelMap, intToChar } from './utils';
 
-export function ndParse(
+export function ndParseWithLineType(
   blob: TextData,
   options?: GeneralOptionsType,
 ): MeasurementXY<number[]> {
@@ -20,14 +20,17 @@ export function ndParse(
   let tempHeader: string[] = [];
   let header: OneLowerCase[] | undefined;
   let labels: string[] = [];
+  let previousLineType: string | undefined;
+  let lineType: string | undefined;
 
 const lines = text.split(/\r\n|\r|\n/);
 
   for (const line of lines){
     const fields = line.split(separator);
-
+      previousLineType = lineType;
+      lineType = fields.shift();
     const isNumeric =
-      line &&  !isNaN(Number(fields[0]));
+      line &&lineType === 'DataValue';
     // Checks if the header is set
     if (!header) {
       // Classifies if it's a header
@@ -45,7 +48,17 @@ const lines = text.split(/\r\n|\r|\n/);
         // Add meta-values
         if (tempHeader) {
           const [key, ...values] = tempHeader.filter((t) => t);
-          if (key) {
+          if (
+            previousLineType &&
+            [
+              'SetupTitle',
+              'PrimitiveTest',
+              'Dimension1',
+              'Dimension2',
+            ].includes(previousLineType)
+          ) {
+            meta[previousLineType] = [key, ...values].join(separator);
+          } else if (key) {
             meta[key] = values.join(separator);
           }
         }

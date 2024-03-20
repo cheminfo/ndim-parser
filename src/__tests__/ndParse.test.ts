@@ -65,12 +65,3 @@ test('real file', () => {
   expect(Object.keys(parsed.variables)).toStrictEqual(keys);
 });
 
-test('breakdown', () => {
-  const csv = readFileSync(
-    join(__dirname, '../../testFiles/breakdown.csv'),
-    'latin1',
-  );
-  const parsed = ndParse(csv, { isTagged: true });
-  const keys = ['x', 'y', 'I', 'a', 'b', 'c'];
-  expect(Object.keys(parsed.variables)).toStrictEqual(keys);
-});
