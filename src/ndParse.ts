@@ -1,10 +1,11 @@
-import type { MeasurementXY, OneLowerCase } from 'cheminfo-types';
+import type { MeasurementXY, OneLowerCase, TextData } from 'cheminfo-types';
+import { ensureString } from 'ensure-string';
 
 import type { GeneralOptionsType } from './types';
 import { defaultKeyMapper, defaultLabelMap, intToChar } from './utils';
 
 export function ndParse(
-  text: string,
+  blob: TextData,
   options?: GeneralOptionsType,
 ): MeasurementXY<number[]> {
   const {
@@ -13,6 +14,7 @@ export function ndParse(
     keyMap = defaultKeyMapper,
     labelMap = defaultLabelMap,
   } = options || {};
+  const text = ensureString(blob);
   const meta: MeasurementXY['meta'] = {};
   const variables: Partial<MeasurementXY<number[]>['variables']> = {};
 
@@ -22,16 +24,16 @@ export function ndParse(
   let prevTag: string | undefined;
   let tag: string | undefined;
 
-  for (const line of text.split(/\r\n|\r|\n/)) {
+const lines = text.split(/\r\n|\r|\n/);
+
+  for (const line of lines){
     const fields = line.split(separator);
     if (isTagged) {
       prevTag = tag;
       tag = fields.shift();
     }
-
     const isNumeric =
       line && (isTagged ? tag === 'DataValue' : !isNaN(Number(fields[0])));
-
     // Checks if the header is set
     if (!header) {
       // Classifies if it's a header
