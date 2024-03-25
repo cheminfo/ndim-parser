@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.0](https://github.com/cheminfo/ndim-parser/compare/v0.5.1...v1.0.0) (2024-03-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* split method and create ndParseWithLineType (replace the tag option)
+
+### Features
+
+* split method and create ndParseWithLineType (replace the tag option) ([4c6123a](https://github.com/cheminfo/ndim-parser/commit/4c6123a7d067999261fd2ed9bb698bd3e910fb30))
+
+
+### Bug Fixes
+
+* update dependencies ([afaf632](https://github.com/cheminfo/ndim-parser/commit/afaf6322a300178a2de73d9c9566b3b6766bee73))
+* update dependencies and improve git actions ([8b38b94](https://github.com/cheminfo/ndim-parser/commit/8b38b9428f88d598f834f02984cd55c80aac4c80))
+
 ### [0.5.1](https://www.github.com/cheminfo/ndim-parser/compare/v0.5.0...v0.5.1) (2021-11-08)
 
 ### Bug Fixes
