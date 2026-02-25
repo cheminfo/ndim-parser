@@ -1,13 +1,19 @@
 import type {
+  MeasurementVariable,
   MeasurementXY,
   MeasurementXYVariables,
   OneLowerCase,
-  MeasurementVariable,
 } from 'cheminfo-types';
 
-import type { AppendedOptionsType } from './types';
-import { isNumber, isNumericRow, orderedKeyMap } from './utils';
+import type { AppendedOptionsType } from './types.ts';
+import { isNumber, isNumericRow, orderedKeyMap } from './utils.ts';
 
+/**
+ * Parses text data containing multiple appended measurement series.
+ * @param text - The text data to parse.
+ * @param options - Parsing options (separator, minimum numeric rows).
+ * @returns An array of parsed measurements, one per series.
+ */
 export function appendedParser(
   text: string,
   options: AppendedOptionsType = {},
@@ -118,7 +124,7 @@ export function appendedParser(
         index < endDataIndex;
         index++
       ) {
-        data.push(parseFloat(lines[index][keyIndex]));
+        data.push(Number.parseFloat(lines[index][keyIndex]));
       }
       variables[keys[keyIndex]] = { data, label: labels[keyIndex] };
     }

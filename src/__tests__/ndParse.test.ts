@@ -1,9 +1,9 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { ndParse } from '..';
+import { ndParse } from '../index.ts';
 
 const simpleExample = `
 meta.first,1
@@ -56,12 +56,12 @@ test('with options', () => {
 
 test('real file', () => {
   const csv = readFileSync(
-    join(__dirname, '../../testFiles/Cdg-V.csv'),
+    join(import.meta.dirname, 'data/Cdg-V.csv'),
     'latin1',
   );
   const parsed = ndParse(csv);
   const keys = ['x', 'y', 'G', 'Q', 'C', 'a', 'I', 'F', 'b'];
+
   expect(parsed.meta?.['Channel.Mode']).toBe('V');
   expect(Object.keys(parsed.variables)).toStrictEqual(keys);
 });
-

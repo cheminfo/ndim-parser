@@ -1,6 +1,6 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 
-import { isNumericRow } from '../utils';
+import { isNumericRow } from '../utils.ts';
 
 test('isNumericRow', () => {
   expect(isNumericRow(['test', '1', '2', '4'])).toBe(true);
